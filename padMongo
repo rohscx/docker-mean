@@ -1,0 +1,55 @@
+Start the Database
+$ docker run --rm --name mongo-dbs_1 -d mongo --auth
+Add the Initial Admin User
+$ docker exec -it mongo-dbs_1 mongo admin
+connecting to: admin
+db.createUser({ user: 'gRo0000T', pwd: 'p@ssword_must_match_', roles: [ { role: "userAdminAnyDatabase", db: "admin" },{role: "dbAdminAnyDatabase", db: "admin" },{role: "readWriteAnyDatabase", db: "admin" } ] });
+docker run -it --rm --link mongo-dbs_1:mongo mongo mongo -u gRo0000T -p p@ssword_must_match_ --authenticationDatabase admin mongo-dbs_1/mabDB
+db.getName();
+
+
+
+
+
+
+Start the Database
+  sudo docker run --rm --name mongo-dbs_1 -d mongo --auth
+  
+Start the Node.js
+  sudo docker run -itd --rm --name node_test -p 3000:3000 --link mongo-dbs_1:node_test -v "$PWD":/user/src/app -w /user/src/app node bash
+
+Add the Initial Admin User
+  sudo docker exec -it mongo-dbs_1 mongo admin
+
+connecting to: admin: createing Admin user
+  db.createUser({ user: 'gRo0000T', pwd: 'p@ssword_must_match_', roles: [ { role: "userAdminAnyDatabase", db: "admin" },{role: "dbAdminAnyDatabase", db: "admin" },{role: "readWriteAnyDatabase", db: "admin" } ] });
+
+connection to: create database and collecitons
+  sudo docker run -it --rm --link mongo-dbs_1:mongo mongo mongo -u gRo0000T -p p@ssword_must_match_ --authenticationDatabase admin mongo-dbs_1/mabDB
+  db.getName();
+
+
+
+
+
+  use mabDB
+  db.createCollection("normalUsers")
+  db.createCollection("adminUsers")
+  db.createCollection("acaUsers")
+  coll = db.getCollection("normalUsers")
+  coll.find()
+  coll.insert({firstName: "DONALND",lastName: "GLOVER", bypassStatus: "Active", bypassCount: 1, bypassMac:"A1:C5:D8:1F:47:1F", ticketNumber: "INC0236991", Aca: "NWFCS" })
+  coll.find()
+  coll = db.getCollection("adminUsers")
+  coll.find()
+  coll.insert({firstName: "EROU",lastName: "FOSTER", adminPassword: "ABC123", adminStatus: "Active", Aca: "FPI"})
+  coll.find()
+  coll = db.getCollection("acaUsers")
+  coll.find()
+  coll.insert({shortName: "FPI", fullName: "FINANCIAL PARTNERS INCORPORATED"})
+  coll.insert({shortName: "NWFCS", fullName: "NORTH WEST FARM CREDIT SERVICES"})
+  coll.insert({shortName: "FCE", fullName: "FARM CREDIT EAST"})
+  coll.insert({shortName: "YAN", fullName: "YANKEE"})
+  coll.insert({shortName: "FCW", fullName: "FARM CREDIT WEST"})
+  coll.insert({shortName: "AGC", fullName: "AGCOUNTRY"})
+  coll.find()
