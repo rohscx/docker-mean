@@ -24,8 +24,7 @@
     */
     menuService.addMenuItem('topbar', {
       title: 'Apic',
-      state: 'apic',
-      type: 'apic.list',
+      state: 'apic.list',
       roles: ['*']
     });
   }
