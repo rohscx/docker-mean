@@ -64,9 +64,9 @@
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
           viewstate = $state.get('apic.view');
-          $templateCache.put('/modules/apic/client/views/view-article.client.view.html', '');
+          $templateCache.put('/modules/apic/client/views/view-apic.client.view.html', '');
 
-          // create mock article
+          // create mock apic
           mockApic = new ApicService({
             _id: '525a8422f6d0f87f0e407a33',
             title: 'An Apic about MEAN',
@@ -76,27 +76,27 @@
           // Initialize Controller
           ApicController = $controller('ApicController as vm', {
             $scope: $scope,
-            articleResolve: mockApic
+            apicResolve: mockApic
           });
         }));
 
         it('Should have the correct URL', function () {
-          expect(viewstate.url).toEqual('/:articleId');
+          expect(viewstate.url).toEqual('/:apicId');
         });
 
         it('Should have a resolve function', function () {
           expect(typeof viewstate.resolve).toEqual('object');
-          expect(typeof viewstate.resolve.articleResolve).toEqual('function');
+          expect(typeof viewstate.resolve.apicResolve).toEqual('function');
         });
 
         it('should respond to URL', inject(function ($state) {
           expect($state.href(viewstate, {
-            articleId: 1
+            apicId: 1
           })).toEqual('/apic/1');
         }));
 
-        it('should attach an article to the controller scope', function () {
-          expect($scope.vm.article._id).toBe(mockApic._id);
+        it('should attach an apic to the controller scope', function () {
+          expect($scope.vm.apic._id).toBe(mockApic._id);
         });
 
         it('Should not be abstract', function () {
@@ -104,7 +104,7 @@
         });
 
         it('Should have templateUrl', function () {
-          expect(viewstate.templateUrl).toBe('/modules/apic/client/views/view-article.client.view.html');
+          expect(viewstate.templateUrl).toBe('/modules/apic/client/views/view-apic.client.view.html');
         });
       });
 

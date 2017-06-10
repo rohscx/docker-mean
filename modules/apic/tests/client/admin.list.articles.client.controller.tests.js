@@ -1,3 +1,4 @@
+
 ﻿(function () {
   'use strict';
 
@@ -47,10 +48,10 @@
       ApicService = _ApicService_;
 
       // Ignore parent template get on state transitions
-      $httpBackend.whenGET('/modules/articles/client/views/list-articles.client.view.html').respond(200, '');
+      $httpBackend.whenGET('/modules/apics/client/views/list-apics.client.view.html').respond(200, '');
       $httpBackend.whenGET('/modules/core/client/views/home.client.view.html').respond(200, '');
 
-      // create mock article
+      // create mock apic
       mockApic = new ApicService({
         _id: '525a8422f6d0f87f0e407a33',
         title: 'An Apic about MEAN',
@@ -78,17 +79,17 @@
         mockApicList = [mockApic, mockApic];
       });
 
-      it('should send a GET request and return all articles', inject(function (ApicService) {
+      it('should send a GET request and return all apics', inject(function (ApicService) {
         // Set POST response
-        $httpBackend.expectGET('/api/articles').respond(mockApicList);
+        $httpBackend.expectGET('/api/apics').respond(mockApicList);
 
 
         $httpBackend.flush();
 
         // Test form inputs are reset
-        expect($scope.vm.articles.length).toEqual(2);
-        expect($scope.vm.articles[0]).toEqual(mockApic);
-        expect($scope.vm.articles[1]).toEqual(mockApic);
+        expect($scope.vm.apics.length).toEqual(2);
+        expect($scope.vm.apics[0]).toEqual(mockApic);
+        expect($scope.vm.apics[1]).toEqual(mockApic);
 
       }));
     });

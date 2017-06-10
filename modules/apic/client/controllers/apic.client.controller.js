@@ -5,12 +5,12 @@
     .module('apic')
     .controller('ApicController', ApicController);
 
-  ApicController.$inject = ['$scope', 'articleResolve', 'Authentication'];
+  ApicController.$inject = ['$scope', 'apicResolve', 'Authentication'];
 
-  function ApicController($scope, article, Authentication) {
+  function ApicController($scope, apic, Authentication) {
     var vm = this;
 
-    vm.article = article;
+    vm.apic = apic;
     vm.authentication = Authentication;
 
   }

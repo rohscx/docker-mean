@@ -5,12 +5,12 @@
     .module('apic.admin')
     .controller('ApicAdminController', ApicAdminController);
 
-  ApicAdminController.$inject = ['$scope', '$state', '$window', 'articleResolve', 'Authentication', 'Notification'];
+  ApicAdminController.$inject = ['$scope', '$state', '$window', 'apicResolve', 'Authentication', 'Notification'];
 
-  function ApicAdminController($scope, $state, $window, article, Authentication, Notification) {
+  function ApicAdminController($scope, $state, $window, apic, Authentication, Notification) {
     var vm = this;
 
-    vm.article = article;
+    vm.apic = apic;
     vm.authentication = Authentication;
     vm.form = {};
     vm.remove = remove;
@@ -19,7 +19,7 @@
     // Remove existing Apic
     function remove() {
       if ($window.confirm('Are you sure you want to delete?')) {
-        vm.article.$remove(function() {
+        vm.apic.$remove(function() {
           $state.go('admin.apic.list');
           Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Apic deleted successfully!' });
         });
@@ -29,12 +29,12 @@
     // Save Apic
     function save(isValid) {
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.articleForm');
+        $scope.$broadcast('show-errors-check-validity', 'vm.form.apicForm');
         return false;
       }
 
-      // Create a new article, or update the current instance
-      vm.article.createOrUpdate()
+      // Create a new apic, or update the current instance
+      vm.apic.createOrUpdate()
         .then(successCallback)
         .catch(errorCallback);
 

@@ -12,12 +12,12 @@ module.exports = function (app) {
     .get(apic.list)
     .post(apic.create);
 
-  // Single article routes
-  app.route('/api/apic/:articleId').all(apicPolicy.isAllowed)
+  // Single apic routes
+  app.route('/api/apic/:apicId').all(apicPolicy.isAllowed)
     .get(apic.read)
     .put(apic.update)
     .delete(apic.delete);
 
-  // Finish by binding the article middleware
-  app.param('articleId', apic.articleByID);
+  // Finish by binding the apic middleware
+  app.param('apicId', apic.apicByID);
 };

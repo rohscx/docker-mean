@@ -51,7 +51,7 @@
       // Ignore parent template get on state transitions
       $httpBackend.whenGET('/modules/core/client/views/home.client.view.html').respond(200, '');
 
-      // create mock article
+      // create mock apic
       mockApic = new ApicService({
         _id: '525a8422f6d0f87f0e407a33',
         title: 'An Apic about MEAN',
@@ -66,7 +66,7 @@
       // Initialize the Apic controller.
       ApicAdminController = $controller('ApicAdminController as vm', {
         $scope: $scope,
-        articleResolve: {}
+        apicResolve: {}
       });
 
       // Spy on state go
@@ -79,13 +79,13 @@
       var sampleApicPostData;
 
       beforeEach(function () {
-        // Create a sample article object
+        // Create a sample apic object
         sampleApicPostData = new ApicService({
           title: 'An Apic about MEAN',
           content: 'MEAN rocks!'
         });
 
-        $scope.vm.article = sampleApicPostData;
+        $scope.vm.apic = sampleApicPostData;
       });
 
       it('should send a POST request with the form input values and then locate to new object URL', inject(function (ApicService) {
@@ -98,7 +98,7 @@
 
         // Test Notification success was called
         expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Apic saved successfully!' });
-        // Test URL redirection after the article was created
+        // Test URL redirection after the apic was created
         expect($state.go).toHaveBeenCalledWith('admin.apic.list');
       }));
 
@@ -117,11 +117,11 @@
 
     describe('vm.save() as update', function () {
       beforeEach(function () {
-        // Mock article in $scope
-        $scope.vm.article = mockApic;
+        // Mock apic in $scope
+        $scope.vm.apic = mockApic;
       });
 
-      it('should update a valid article', inject(function (ApicService) {
+      it('should update a valid apic', inject(function (ApicService) {
         // Set PUT response
         $httpBackend.expectPUT(/api\/apic\/([0-9a-fA-F]{24})$/).respond();
 
@@ -151,10 +151,10 @@
     describe('vm.remove()', function () {
       beforeEach(function () {
         // Setup apic
-        $scope.vm.article = mockApic;
+        $scope.vm.apic = mockApic;
       });
 
-      it('should delete the article and redirect to apic', function () {
+      it('should delete the apic and redirect to apic', function () {
         // Return true on confirm message
         spyOn(window, 'confirm').and.returnValue(true);
 
@@ -167,7 +167,7 @@
         expect($state.go).toHaveBeenCalledWith('admin.apic.list');
       });
 
-      it('should should not delete the article and not redirect', function () {
+      it('should should not delete the apic and not redirect', function () {
         // Return false on confirm message
         spyOn(window, 'confirm').and.returnValue(false);
 

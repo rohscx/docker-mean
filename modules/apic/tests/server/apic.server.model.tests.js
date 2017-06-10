@@ -12,7 +12,7 @@ var should = require('should'),
  * Globals
  */
 var user,
-  article;
+  apic;
 
 /**
  * Unit tests
@@ -30,7 +30,7 @@ describe('Apic Model Unit Tests:', function () {
     });
 
     user.save(function () {
-      article = new Apic({
+      apic = new Apic({
         title: 'Apic Title',
         content: 'Apic Content',
         user: user
@@ -43,16 +43,16 @@ describe('Apic Model Unit Tests:', function () {
   describe('Method Save', function () {
     it('should be able to save without problems', function (done) {
       this.timeout(10000);
-      article.save(function (err) {
+      apic.save(function (err) {
         should.not.exist(err);
         return done();
       });
     });
 
     it('should be able to show an error when try to save without title', function (done) {
-      article.title = '';
+      apic.title = '';
 
-      article.save(function (err) {
+      apic.save(function (err) {
         should.exist(err);
         return done();
       });

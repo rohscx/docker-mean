@@ -24,15 +24,15 @@
         }
       })
       .state('apic.view', {
-        url: '/:articleId',
-        templateUrl: '/modules/apic/client/views/view-article.client.view.html',
+        url: '/:apicId',
+        templateUrl: '/modules/apic/client/views/view-apic.client.view.html',
         controller: 'ApicController',
         controllerAs: 'vm',
         resolve: {
-          articleResolve: getApic
+          apicResolve: getApic
         },
         data: {
-          pageTitle: 'Apic {{ articleResolve.title }}'
+          pageTitle: 'Apic {{ apicResolve.title }}'
         }
       });
   }
@@ -41,7 +41,7 @@
 
   function getApic($stateParams, ApicService) {
     return ApicService.get({
-      articleId: $stateParams.articleId
+      apicId: $stateParams.apicId
     }).$promise;
   }
 }());

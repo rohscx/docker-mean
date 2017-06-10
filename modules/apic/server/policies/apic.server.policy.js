@@ -18,7 +18,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/apic',
       permissions: '*'
     }, {
-      resources: '/api/apic/:articleId',
+      resources: '/api/apic/:apicId',
       permissions: '*'
     }]
   }, {
@@ -27,7 +27,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/apic',
       permissions: ['get']
     }, {
-      resources: '/api/apic/:articleId',
+      resources: '/api/apic/:apicId',
       permissions: ['get']
     }]
   }, {
@@ -36,7 +36,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/apic',
       permissions: ['get']
     }, {
-      resources: '/api/apic/:articleId',
+      resources: '/api/apic/:apicId',
       permissions: ['get']
     }]
   }]);
@@ -48,8 +48,8 @@ exports.invokeRolesPolicies = function () {
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
 
-  // If an article is being processed and the current user created it then allow any manipulation
-  if (req.article && req.user && req.article.user && req.article.user.id === req.user.id) {
+  // If an apic is being processed and the current user created it then allow any manipulation
+  if (req.apic && req.user && req.apic.user && req.apic.user.id === req.user.id) {
     return next();
   }
 

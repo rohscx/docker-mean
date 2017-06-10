@@ -15,7 +15,7 @@ var app,
   agent,
   credentials,
   user,
-  article;
+  apic;
 
 /**
  * Apic routes tests
@@ -48,9 +48,9 @@ describe('Apic Admin CRUD tests', function () {
       provider: 'local'
     });
 
-    // Save a user to the test db and create new article
+    // Save a user to the test db and create new apic
     user.save(function () {
-      article = {
+      apic = {
         title: 'Apic Title',
         content: 'Apic Content'
       };
@@ -59,7 +59,7 @@ describe('Apic Admin CRUD tests', function () {
     });
   });
 
-  it('should be able to save an article if logged in', function (done) {
+  it('should be able to save an apic if logged in', function (done) {
     agent.post('/api/auth/signin')
       .send(credentials)
       .expect(200)
@@ -72,30 +72,30 @@ describe('Apic Admin CRUD tests', function () {
         // Get the userId
         var userId = user.id;
 
-        // Save a new article
-        agent.post('/api/articles')
-          .send(article)
+        // Save a new apic
+        agent.post('/api/apics')
+          .send(apic)
           .expect(200)
-          .end(function (articleSaveErr, articleSaveRes) {
-            // Handle article save error
-            if (articleSaveErr) {
-              return done(articleSaveErr);
+          .end(function (apicSaveErr, apicSaveRes) {
+            // Handle apic save error
+            if (apicSaveErr) {
+              return done(apicSaveErr);
             }
 
-            // Get a list of articles
-            agent.get('/api/articles')
-              .end(function (articlesGetErr, articlesGetRes) {
-                // Handle article save error
-                if (articlesGetErr) {
-                  return done(articlesGetErr);
+            // Get a list of apics
+            agent.get('/api/apics')
+              .end(function (apicsGetErr, apicsGetRes) {
+                // Handle apic save error
+                if (apicsGetErr) {
+                  return done(apicsGetErr);
                 }
 
-                // Get articles list
-                var articles = articlesGetRes.body;
+                // Get apics list
+                var apics = apicsGetRes.body;
 
                 // Set assertions
-                (articles[0].user._id).should.equal(userId);
-                (articles[0].title).should.match('Apic Title');
+                (apics[0].user._id).should.equal(userId);
+                (apics[0].title).should.match('Apic Title');
 
                 // Call the assertion callback
                 done();
@@ -104,7 +104,7 @@ describe('Apic Admin CRUD tests', function () {
       });
   });
 
-  it('should be able to update an article if signed in', function (done) {
+  it('should be able to update an apic if signed in', function (done) {
     agent.post('/api/auth/signin')
       .send(credentials)
       .expect(200)
@@ -117,32 +117,32 @@ describe('Apic Admin CRUD tests', function () {
         // Get the userId
         var userId = user.id;
 
-        // Save a new article
-        agent.post('/api/articles')
-          .send(article)
+        // Save a new apic
+        agent.post('/api/apics')
+          .send(apic)
           .expect(200)
-          .end(function (articleSaveErr, articleSaveRes) {
-            // Handle article save error
-            if (articleSaveErr) {
-              return done(articleSaveErr);
+          .end(function (apicSaveErr, apicSaveRes) {
+            // Handle apic save error
+            if (apicSaveErr) {
+              return done(apicSaveErr);
             }
 
-            // Update article title
-            article.title = 'WHY YOU GOTTA BE SO MEAN?';
+            // Update apic title
+            apic.title = 'WHY YOU GOTTA BE SO MEAN?';
 
-            // Update an existing article
-            agent.put('/api/articles/' + articleSaveRes.body._id)
-              .send(article)
+            // Update an existing apic
+            agent.put('/api/apics/' + apicSaveRes.body._id)
+              .send(apic)
               .expect(200)
-              .end(function (articleUpdateErr, articleUpdateRes) {
-                // Handle article update error
-                if (articleUpdateErr) {
-                  return done(articleUpdateErr);
+              .end(function (apicUpdateErr, apicUpdateRes) {
+                // Handle apic update error
+                if (apicUpdateErr) {
+                  return done(apicUpdateErr);
                 }
 
                 // Set assertions
-                (articleUpdateRes.body._id).should.equal(articleSaveRes.body._id);
-                (articleUpdateRes.body.title).should.match('WHY YOU GOTTA BE SO MEAN?');
+                (apicUpdateRes.body._id).should.equal(apicSaveRes.body._id);
+                (apicUpdateRes.body.title).should.match('WHY YOU GOTTA BE SO MEAN?');
 
                 // Call the assertion callback
                 done();
@@ -151,9 +151,9 @@ describe('Apic Admin CRUD tests', function () {
       });
   });
 
-  it('should not be able to save an article if no title is provided', function (done) {
+  it('should not be able to save an apic if no title is provided', function (done) {
     // Invalidate title field
-    article.title = '';
+    apic.title = '';
 
     agent.post('/api/auth/signin')
       .send(credentials)
@@ -167,21 +167,21 @@ describe('Apic Admin CRUD tests', function () {
         // Get the userId
         var userId = user.id;
 
-        // Save a new article
-        agent.post('/api/articles')
-          .send(article)
+        // Save a new apic
+        agent.post('/api/apics')
+          .send(apic)
           .expect(422)
-          .end(function (articleSaveErr, articleSaveRes) {
+          .end(function (apicSaveErr, apicSaveRes) {
             // Set message assertion
-            (articleSaveRes.body.message).should.match('Title cannot be blank');
+            (apicSaveRes.body.message).should.match('Title cannot be blank');
 
-            // Handle article save error
-            done(articleSaveErr);
+            // Handle apic save error
+            done(apicSaveErr);
           });
       });
   });
 
-  it('should be able to delete an article if signed in', function (done) {
+  it('should be able to delete an apic if signed in', function (done) {
     agent.post('/api/auth/signin')
       .send(credentials)
       .expect(200)
@@ -194,28 +194,28 @@ describe('Apic Admin CRUD tests', function () {
         // Get the userId
         var userId = user.id;
 
-        // Save a new article
-        agent.post('/api/articles')
-          .send(article)
+        // Save a new apic
+        agent.post('/api/apics')
+          .send(apic)
           .expect(200)
-          .end(function (articleSaveErr, articleSaveRes) {
-            // Handle article save error
-            if (articleSaveErr) {
-              return done(articleSaveErr);
+          .end(function (apicSaveErr, apicSaveRes) {
+            // Handle apic save error
+            if (apicSaveErr) {
+              return done(apicSaveErr);
             }
 
-            // Delete an existing article
-            agent.delete('/api/articles/' + articleSaveRes.body._id)
-              .send(article)
+            // Delete an existing apic
+            agent.delete('/api/apics/' + apicSaveRes.body._id)
+              .send(apic)
               .expect(200)
-              .end(function (articleDeleteErr, articleDeleteRes) {
-                // Handle article error error
-                if (articleDeleteErr) {
-                  return done(articleDeleteErr);
+              .end(function (apicDeleteErr, apicDeleteRes) {
+                // Handle apic error error
+                if (apicDeleteErr) {
+                  return done(apicDeleteErr);
                 }
 
                 // Set assertions
-                (articleDeleteRes.body._id).should.equal(articleSaveRes.body._id);
+                (apicDeleteRes.body._id).should.equal(apicSaveRes.body._id);
 
                 // Call the assertion callback
                 done();
@@ -224,10 +224,10 @@ describe('Apic Admin CRUD tests', function () {
       });
   });
 
-  it('should be able to get a single article if signed in and verify the custom "isCurrentUserOwner" field is set to "true"', function (done) {
-    // Create new article model instance
-    article.user = user;
-    var articleObj = new Apic(article);
+  it('should be able to get a single apic if signed in and verify the custom "isCurrentUserOwner" field is set to "true"', function (done) {
+    // Create new apic model instance
+    apic.user = user;
+    var apicObj = new Apic(apic);
 
     agent.post('/api/auth/signin')
       .send(credentials)
@@ -241,31 +241,31 @@ describe('Apic Admin CRUD tests', function () {
         // Get the userId
         var userId = user.id;
 
-        // Save a new article
-        agent.post('/api/articles')
-          .send(article)
+        // Save a new apic
+        agent.post('/api/apics')
+          .send(apic)
           .expect(200)
-          .end(function (articleSaveErr, articleSaveRes) {
-            // Handle article save error
-            if (articleSaveErr) {
-              return done(articleSaveErr);
+          .end(function (apicSaveErr, apicSaveRes) {
+            // Handle apic save error
+            if (apicSaveErr) {
+              return done(apicSaveErr);
             }
 
-            // Get the article
-            agent.get('/api/articles/' + articleSaveRes.body._id)
+            // Get the apic
+            agent.get('/api/apics/' + apicSaveRes.body._id)
               .expect(200)
-              .end(function (articleInfoErr, articleInfoRes) {
-                // Handle article error
-                if (articleInfoErr) {
-                  return done(articleInfoErr);
+              .end(function (apicInfoErr, apicInfoRes) {
+                // Handle apic error
+                if (apicInfoErr) {
+                  return done(apicInfoErr);
                 }
 
                 // Set assertions
-                (articleInfoRes.body._id).should.equal(articleSaveRes.body._id);
-                (articleInfoRes.body.title).should.equal(article.title);
+                (apicInfoRes.body._id).should.equal(apicSaveRes.body._id);
+                (apicInfoRes.body.title).should.equal(apic.title);
 
                 // Assert that the "isCurrentUserOwner" field is set to true since the current User created it
-                (articleInfoRes.body.isCurrentUserOwner).should.equal(true);
+                (apicInfoRes.body.isCurrentUserOwner).should.equal(true);
 
                 // Call the assertion callback
                 done();

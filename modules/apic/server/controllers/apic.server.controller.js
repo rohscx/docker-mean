@@ -9,70 +9,70 @@ var path = require('path'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
- * Create an article
+ * Create an apic
  */
 exports.create = function (req, res) {
-  var article = new Apic(req.body);
-  article.user = req.user;
+  var apic = new Apic(req.body);
+  apic.user = req.user;
 
-  article.save(function (err) {
+  apic.save(function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(apic);
     }
   });
 };
 
 /**
- * Show the current article
+ * Show the current apic
  */
 exports.read = function (req, res) {
   // convert mongoose document to JSON
-  var article = req.article ? req.article.toJSON() : {};
+  var apic = req.apic ? req.apic.toJSON() : {};
 
   // Add a custom field to the Apic, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Apic model.
-  article.isCurrentUserOwner = !!(req.user && article.user && article.user._id.toString() === req.user._id.toString());
+  apic.isCurrentUserOwner = !!(req.user && apic.user && apic.user._id.toString() === req.user._id.toString());
 
-  res.json(article);
+  res.json(apic);
 };
 
 /**
- * Update an article
+ * Update an apic
  */
 exports.update = function (req, res) {
-  var article = req.article;
+  var apic = req.apic;
 
-  article.title = req.body.title;
-  article.content = req.body.content;
+  apic.title = req.body.title;
+  apic.content = req.body.content;
 
-  article.save(function (err) {
+  apic.save(function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(apic);
     }
   });
 };
 
 /**
- * Delete an article
+ * Delete an apic
  */
 exports.delete = function (req, res) {
-  var article = req.article;
+  var apic = req.apic;
 
-  article.remove(function (err) {
+  apic.remove(function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(apic);
     }
   });
 };
@@ -95,7 +95,7 @@ exports.list = function (req, res) {
 /**
  * Apic middleware
  */
-exports.articleByID = function (req, res, next, id) {
+exports.apicByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
@@ -103,15 +103,15 @@ exports.articleByID = function (req, res, next, id) {
     });
   }
 
-  Apic.findById(id).populate('user', 'displayName').exec(function (err, article) {
+  Apic.findById(id).populate('user', 'displayName').exec(function (err, apic) {
     if (err) {
       return next(err);
-    } else if (!article) {
+    } else if (!apic) {
       return res.status(404).send({
-        message: 'No article with that identifier has been found'
+        message: 'No apic with that identifier has been found'
       });
     }
-    req.article = article;
+    req.apic = apic;
     next();
   });
 };

@@ -3,16 +3,16 @@
     <h1>Apic</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="article in vm.apic" ui-sref="apic.view({ articleId: article._id })" class="list-group-item">
+    <a ng-repeat="apic in vm.apic" ui-sref="apic.view({ apicId: apic._id })" class="list-group-item">
       <small class="list-group-item-text">
         Posted on
-        <span ng-bind="article.created | date:'mediumDate'"></span>
+        <span ng-bind="apic.created | date:'mediumDate'"></span>
         by
-        <span ng-if="article.user" ng-bind="article.user.displayName"></span>
-        <span ng-if="!article.user">Deleted User</span>
+        <span ng-if="apic.user" ng-bind="apic.user.displayName"></span>
+        <span ng-if="!apic.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="article.title"></h4>
-      <p class="list-group-item-text" ng-bind="article.content"></p>
+      <h4 class="list-group-item-heading" ng-bind="apic.title"></h4>
+      <p class="list-group-item-text" ng-bind="apic.content"></p>
     </a>
   </div>
 </section>

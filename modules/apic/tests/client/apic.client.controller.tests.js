@@ -46,7 +46,7 @@
       Authentication = _Authentication_;
       ApicService = _ApicService_;
 
-      // create mock article
+      // create mock apic
       mockApic = new ApicService({
         _id: '525a8422f6d0f87f0e407a33',
         title: 'An Apic about MEAN',
@@ -61,7 +61,7 @@
       // Initialize the Apic controller.
       ApicController = $controller('ApicController as vm', {
         $scope: $scope,
-        articleResolve: {}
+        apicResolve: {}
       });
 
       // Spy on state go

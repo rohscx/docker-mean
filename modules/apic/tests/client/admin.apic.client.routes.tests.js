@@ -64,15 +64,15 @@
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
           createstate = $state.get('admin.apic.create');
-          $templateCache.put('/modules/apic/client/views/admin/form-article.client.view.html', '');
+          $templateCache.put('/modules/apic/client/views/admin/form-apic.client.view.html', '');
 
-          // Create mock article
+          // Create mock apic
           mockApic = new ApicService();
 
           // Initialize Controller
           ApicAdminController = $controller('ApicAdminController as vm', {
             $scope: $scope,
-            articleResolve: mockApic
+            apicResolve: mockApic
           });
         }));
 
@@ -82,16 +82,16 @@
 
         it('Should have a resolve function', function () {
           expect(typeof createstate.resolve).toEqual('object');
-          expect(typeof createstate.resolve.articleResolve).toEqual('function');
+          expect(typeof createstate.resolve.apicResolve).toEqual('function');
         });
 
         it('should respond to URL', inject(function ($state) {
           expect($state.href(createstate)).toEqual('/admin/apic/create');
         }));
 
-        it('should attach an article to the controller scope', function () {
-          expect($scope.vm.article._id).toBe(mockApic._id);
-          expect($scope.vm.article._id).toBe(undefined);
+        it('should attach an apic to the controller scope', function () {
+          expect($scope.vm.apic._id).toBe(mockApic._id);
+          expect($scope.vm.apic._id).toBe(undefined);
         });
 
         it('Should not be abstract', function () {
@@ -99,7 +99,7 @@
         });
 
         it('Should have templateUrl', function () {
-          expect(createstate.templateUrl).toBe('/modules/apic/client/views/admin/form-article.client.view.html');
+          expect(createstate.templateUrl).toBe('/modules/apic/client/views/admin/form-apic.client.view.html');
         });
       });
 
@@ -110,9 +110,9 @@
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
           editstate = $state.get('admin.apic.edit');
-          $templateCache.put('/modules/apic/client/views/admin/form-article.client.view.html', '');
+          $templateCache.put('/modules/apic/client/views/admin/form-apic.client.view.html', '');
 
-          // Create mock article
+          // Create mock apic
           mockApic = new ApicService({
             _id: '525a8422f6d0f87f0e407a33',
             title: 'An Apic about MEAN',
@@ -122,27 +122,27 @@
           // Initialize Controller
           ApicAdminController = $controller('ApicAdminController as vm', {
             $scope: $scope,
-            articleResolve: mockApic
+            apicResolve: mockApic
           });
         }));
 
         it('Should have the correct URL', function () {
-          expect(editstate.url).toEqual('/:articleId/edit');
+          expect(editstate.url).toEqual('/:apicId/edit');
         });
 
         it('Should have a resolve function', function () {
           expect(typeof editstate.resolve).toEqual('object');
-          expect(typeof editstate.resolve.articleResolve).toEqual('function');
+          expect(typeof editstate.resolve.apicResolve).toEqual('function');
         });
 
         it('should respond to URL', inject(function ($state) {
           expect($state.href(editstate, {
-            articleId: 1
+            apicId: 1
           })).toEqual('/admin/apic/1/edit');
         }));
 
-        it('should attach an article to the controller scope', function () {
-          expect($scope.vm.article._id).toBe(mockApic._id);
+        it('should attach an apic to the controller scope', function () {
+          expect($scope.vm.apic._id).toBe(mockApic._id);
         });
 
         it('Should not be abstract', function () {
@@ -150,7 +150,7 @@
         });
 
         it('Should have templateUrl', function () {
-          expect(editstate.templateUrl).toBe('/modules/apic/client/views/admin/form-article.client.view.html');
+          expect(editstate.templateUrl).toBe('/modules/apic/client/views/admin/form-apic.client.view.html');
         });
 
         xit('Should go to unauthorized route', function () {

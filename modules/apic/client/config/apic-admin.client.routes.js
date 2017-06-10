@@ -25,26 +25,26 @@
       })
       .state('admin.apic.create', {
         url: '/create',
-        templateUrl: '/modules/apic/client/views/admin/form-article.client.view.html',
+        templateUrl: '/modules/apic/client/views/admin/form-apic.client.view.html',
         controller: 'ApicAdminController',
         controllerAs: 'vm',
         data: {
           roles: ['admin']
         },
         resolve: {
-          articleResolve: newApic
+          apicResolve: newApic
         }
       })
       .state('admin.apic.edit', {
-        url: '/:articleId/edit',
-        templateUrl: '/modules/apic/client/views/admin/form-article.client.view.html',
+        url: '/:apicId/edit',
+        templateUrl: '/modules/apic/client/views/admin/form-apic.client.view.html',
         controller: 'ApicAdminController',
         controllerAs: 'vm',
         data: {
           roles: ['admin']
         },
         resolve: {
-          articleResolve: getApic
+          apicResolve: getApic
         }
       });
   }
@@ -53,7 +53,7 @@
 
   function getApic($stateParams, ApicService) {
     return ApicService.get({
-      articleId: $stateParams.articleId
+      apicId: $stateParams.apicId
     }).$promise;
   }
 
