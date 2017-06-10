@@ -6,7 +6,7 @@
     .run(menuConfig);
 
   menuConfig.$inject = ['menuService'];
-
+  /*
   function menuConfig(menuService) {
     menuService.addMenuItem('topbar', {
       title: 'Apic',
@@ -19,6 +19,13 @@
     menuService.addSubMenuItem('topbar', 'apic', {
       title: 'List Apic',
       state: 'apic.list',
+      roles: ['*']
+    });
+    */
+    menuService.addMenuItem('topbar', {
+      title: 'Apic',
+      state: 'apic',
+      type: 'apic.list',
       roles: ['*']
     });
   }
