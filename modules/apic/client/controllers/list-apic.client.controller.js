@@ -9,6 +9,7 @@
 
   function ApicListController(ApicService) {
     var vm = this;
+    message = "Hello W)rld";
 
     vm.apic = ApicService.query();
   }
