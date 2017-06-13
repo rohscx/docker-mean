@@ -13,5 +13,3 @@
     vm.apic = ApicService.query();
   }
 }());
-
-console.log("TEST DATA");
