@@ -9,7 +9,7 @@
 
   function ApicListController(ApicService) {
     var vm = this;
-    console.log("Hello W)rld");
+    console.log(this);
 
     vm.apic = ApicService.query();
   }
